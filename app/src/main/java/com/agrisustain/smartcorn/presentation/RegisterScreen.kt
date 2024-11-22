@@ -42,7 +42,7 @@ fun RegisterScreen(
                         onClick = { navController.navigateUp() }
                     )
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFFE6F4EA)),
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFF47AF64)),
 
             )
         },
@@ -52,9 +52,8 @@ fun RegisterScreen(
                 modifier = Modifier
                     .padding(paddingValues)
                     .fillMaxSize()
-                    .background(Color(0xFFE6F4EA)) // Background color
+                    .background(Color(0xFF47AF64)) // Background color
             ) {
-
                 // Title
                 Text(
                     text = "Masukkan Data Diri",
@@ -65,6 +64,7 @@ fun RegisterScreen(
                 )
                 Spacer(modifier = Modifier.height(55.dp))
 
+
                 Column(
                     verticalArrangement = Arrangement.Bottom,
                     modifier = Modifier
@@ -73,13 +73,13 @@ fun RegisterScreen(
                         .padding(16.dp)
                 ) {
                     // Input fields
-                    FormInputField(label = "Nama Pengguna*", placeholder = "Nama Pengguna")
-                    FormInputField(label = "Email*", placeholder = "Email")
-                    FormInputField(label = "Password*", placeholder = "Password")
-                    FormInputField(label = "Umur*", placeholder = "Umur")
-                    FormInputField(label = "Negara*", placeholder = "Negara")
-                    FormInputField(label = "Provinsi*", placeholder = "Provinsi")
-                    FormInputField(label = "Kota*", placeholder = "Kota")
+                    FormInputRegister(label = "Nama Pengguna*", placeholder = "Nama Pengguna")
+                    FormInputRegister(label = "Email*", placeholder = "Email")
+                    FormInputRegister(label = "Password*", placeholder = "Password")
+                    FormInputRegister(label = "Umur*", placeholder = "Umur")
+                    FormInputRegister(label = "Negara*", placeholder = "Negara")
+                    FormInputRegister(label = "Provinsi*", placeholder = "Provinsi")
+                    FormInputRegister(label = "Kota*", placeholder = "Kota")
 
                     // Terms and conditions
                     Text(
@@ -119,7 +119,7 @@ fun RegisterScreen(
 
 
 @Composable
-fun FormInputField(label: String, placeholder: String) {
+fun FormInputRegister(label: String, placeholder: String) {
     val textState = remember { mutableStateOf(TextFieldValue("")) }
     OutlinedTextField(
         value = textState.value,
