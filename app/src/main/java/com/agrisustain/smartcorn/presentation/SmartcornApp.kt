@@ -21,10 +21,12 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.agrisustain.smartcorn.R
 import com.agrisustain.smartcorn.navigation.NavigationItem
 import com.agrisustain.smartcorn.navigation.Screen
@@ -49,6 +51,14 @@ fun SmartcornApp (
         composable(Screen.Scan.route) { DeteksiPenyakitScreen(navController) }
         composable(Screen.Forum.route) { ForumScreen(navController) }
         composable(Screen.Chat.route) { ChatScreen(navController) }
+        composable(Screen.DetailEdukasi.route + "/{edukasiId}",
+            arguments = listOf(navArgument("edukasiId") { type = NavType.IntType })
+        ) { navBackStackEntry ->
+            DetailEdukasiScreen(
+                navController = navController,
+                edukasiId = navBackStackEntry.arguments?.getInt("edukasiId")
+            )
+        }
     }
 }
 

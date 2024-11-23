@@ -2,6 +2,7 @@ package com.agrisustain.smartcorn.presentation.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -32,7 +33,7 @@ import com.agrisustain.smartcorn.model.Edukasi
 fun EdukasiItem (
     edukasi: Edukasi,
     modifier: Modifier = Modifier,
-//    onItemClicked: (Int) -> Unit,
+    onItemClicked: (Int) -> Unit,
 ) {
     Card(
         modifier = Modifier
@@ -40,8 +41,8 @@ fun EdukasiItem (
             .padding(8.dp)
             .shadow(
                 elevation = 4.dp
-            ),
-        //            .clickable { onItemClicked(edukasi.id) }
+            )
+            .clickable { onItemClicked(edukasi.id) },
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(containerColor = Color(0xFF47AF64))
     ) {
@@ -86,6 +87,7 @@ fun PreviewEdukasiItem () {
             "Judul Edukasi 1",
             "Deskripsi edukasi 1",
             R.drawable.budidaya_image
-        )
+        ),
+        onItemClicked = { }
     )
 }

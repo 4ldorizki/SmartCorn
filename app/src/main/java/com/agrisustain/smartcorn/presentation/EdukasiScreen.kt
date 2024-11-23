@@ -34,6 +34,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.agrisustain.smartcorn.data.SmartcornData
 import com.agrisustain.smartcorn.model.Edukasi
+import com.agrisustain.smartcorn.navigation.Screen
 import com.agrisustain.smartcorn.presentation.component.EdukasiItem
 import com.agrisustain.smartcorn.presentation.component.SideBarButton
 
@@ -107,8 +108,10 @@ fun EdukasiScreen(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = modifier.padding(horizontal = 8.dp)
             ) {
-                items(edukasi, key = { it.id }) { edukasiItem ->
-                    EdukasiItem(edukasi = edukasiItem)
+                items(edukasi, key = { it.id }) {
+                    EdukasiItem(edukasi = it) { edukasiId ->
+                        navController.navigate(Screen.DetailEdukasi.route + "/$edukasiId")
+                    }
                 }
             }
         }

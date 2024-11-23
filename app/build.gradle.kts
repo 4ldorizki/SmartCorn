@@ -61,4 +61,5 @@ dependencies {
     implementation("androidx.compose.material:material:1.8.0-alpha04")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
     implementation ("androidx.lifecycle:lifecycle-runtime-compose:2.6.1")
+    implementation("androidx.core:core-splashscreen:1.0.1")
 }
