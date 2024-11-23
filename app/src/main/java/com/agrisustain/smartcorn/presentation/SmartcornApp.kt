@@ -30,6 +30,7 @@ import androidx.navigation.navArgument
 import com.agrisustain.smartcorn.R
 import com.agrisustain.smartcorn.navigation.NavigationItem
 import com.agrisustain.smartcorn.navigation.Screen
+import com.agrisustain.smartcorn.presentation.component.HomeItem
 
 @Composable
 fun SmartcornApp (
@@ -51,6 +52,7 @@ fun SmartcornApp (
         composable(Screen.Scan.route) { DeteksiPenyakitScreen(navController) }
         composable(Screen.Forum.route) { ForumScreen(navController) }
         composable(Screen.Chat.route) { ChatScreen(navController) }
+        composable(Screen.Edukasi.route) { HomeItem(navController) }
         composable(Screen.DetailEdukasi.route + "/{edukasiId}",
             arguments = listOf(navArgument("edukasiId") { type = NavType.IntType })
         ) { navBackStackEntry ->

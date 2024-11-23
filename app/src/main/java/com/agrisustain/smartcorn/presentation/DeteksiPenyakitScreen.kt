@@ -105,7 +105,7 @@ fun DeteksiPenyakitScreen (
                         clip = false // Jika true, bayangan akan mengikuti bentuk klip
                     )
                     .clip(RoundedCornerShape(16.dp))
-                    .background(color = Color(0xFFe6f5e6))
+                    .background(color = Color(0xFFE4FFEC))
                     .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -167,8 +167,12 @@ fun DeteksiPenyakitScreen (
                 Text(
                     text = "Riwayat Deteksi Penyakit", fontSize = 16.sp, fontWeight = FontWeight.SemiBold
                 )
-                Column (){
-                    Text("Isi Riwayat")
+                Column (
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.fillMaxSize()
+                ){
+                    Text("Riwayat Kosong")
                 }
             }
         }

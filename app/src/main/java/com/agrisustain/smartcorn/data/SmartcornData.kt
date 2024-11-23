@@ -33,36 +33,42 @@ object SmartcornData {
             1,
             "Judul Edukasi 1",
             "Deskripsi edukasi 1",
-            R.drawable.budidaya_image
+            "Secara genetik memiliki tingkat kemurnian varietas yang tinggi, tidak tercampur dengan sifat-sifat buruk dari varietas yang tidak dikehendaki",
+            R.drawable.budidaya_image2
         ),
         Edukasi(
             2,
             "Judul Edukasi 2",
             "Deskripsi edukasi 2",
+            "",
             R.drawable.budidaya_image
         ),
         Edukasi(
             3,
             "Judul Edukasi 3",
             "Deskripsi edukasi 3",
+            "",
             R.drawable.budidaya_image
         ),
         Edukasi(
             4,
             "Judul Edukasi 4",
             "Deskripsi edukasi 4",
+            "",
             R.drawable.budidaya_image
         ),
         Edukasi(
             5,
             "Judul Edukasi 5",
             "Deskripsi edukasi 5",
+            "",
             R.drawable.budidaya_image
         ),
         Edukasi(
             6,
             "Judul Edukasi 6",
             "Deskripsi edukasi 6",
+            "",
             R.drawable.budidaya_image
         )
     )
