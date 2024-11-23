@@ -28,7 +28,7 @@ import com.agrisustain.smartcorn.presentation.component.SmartButton
 @Composable
 fun GetStartedPage(navController: NavController) {
     // Kondisi jika sudah login
-    navController.navigate(Screen.Home.route)
+    //navController.navigate(Screen.Home.route)
     Column (
         modifier = Modifier
             .fillMaxSize()

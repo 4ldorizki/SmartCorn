@@ -31,11 +31,13 @@ import com.agrisustain.smartcorn.R
 import com.agrisustain.smartcorn.navigation.NavigationItem
 import com.agrisustain.smartcorn.navigation.Screen
 import com.agrisustain.smartcorn.presentation.component.HomeItem
+import com.agrisustain.smartcorn.viewmodel.AuthViewModel
 
 @Composable
 fun SmartcornApp (
     modifier: Modifier = Modifier,
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
+    authViewModel: AuthViewModel
 ) {
     val context = LocalContext.current
 
@@ -46,13 +48,13 @@ fun SmartcornApp (
     ) {
         composable(Screen.GetStarted.route) { GetStartedPage(navController) }
         composable(Screen.Start.route) { StartScreen(navController) }
-        composable(Screen.Login.route) { LoginScreen(navController) }
+        composable(Screen.Login.route) { LoginScreen(navController, authViewModel) }
+        composable(Screen.Daftar.route) { RegisterScreen(navController, authViewModel) }
         composable(Screen.Home.route) { HomeScreen(navController) }
         composable(Screen.Edukasi.route) { EdukasiScreen(navController) }
         composable(Screen.Scan.route) { DeteksiPenyakitScreen(navController) }
         composable(Screen.Forum.route) { ForumScreen(navController) }
         composable(Screen.Chat.route) { ChatScreen(navController) }
-        composable(Screen.Edukasi.route) { HomeItem(navController) }
         composable(Screen.DetailEdukasi.route + "/{edukasiId}",
             arguments = listOf(navArgument("edukasiId") { type = NavType.IntType })
         ) { navBackStackEntry ->
@@ -125,7 +127,7 @@ fun BottomBar (
 @Preview
 @Composable
 fun PreviewBottomBar () {
-    SmartcornApp()
+    SmartcornApp(authViewModel = AuthViewModel())
 //    BottomBar(navController = rememberNavController())
 }
 

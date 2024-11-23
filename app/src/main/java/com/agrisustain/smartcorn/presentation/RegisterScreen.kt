@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -23,13 +24,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.agrisustain.smartcorn.viewmodel.AuthViewModel
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegisterScreen(
-    navController: NavController
+    navController: NavController,
+    authViewModel: AuthViewModel,
 ) {
     Scaffold(
         topBar = {
@@ -74,8 +77,34 @@ fun RegisterScreen(
                 ) {
                     // Input fields
                     FormInputField(label = "Nama Pengguna*", placeholder = "Nama Pengguna")
-                    FormInputField(label = "Email*", placeholder = "Email")
-                    FormInputField(label = "Password*", placeholder = "Password")
+
+                    // Input Email dengan latar belakang putih
+                    val emailState = remember { mutableStateOf(TextFieldValue("")) }
+                    OutlinedTextField(
+                        value = emailState.value,
+                        onValueChange = { emailState.value = it },
+                        label = { Text("Email*") },
+                        placeholder = { Text("Masukan email") },
+                        modifier = Modifier
+                            .background(Color.White)
+                            .fillMaxWidth(),
+                        singleLine = true,
+                        )
+
+                    // Input Kata Sandi dengan latar belakang putih
+                    val passwordState = remember { mutableStateOf(TextFieldValue("")) }
+                    OutlinedTextField(
+                        value = passwordState.value,
+                        onValueChange = { passwordState.value = it },
+                        label = { Text("Kata Sandi") },
+                        placeholder = { Text("Masukan kata sandi") },
+                        visualTransformation = PasswordVisualTransformation(),
+                        modifier = Modifier
+                            .background(Color.White)
+                            .fillMaxWidth(),
+                        singleLine = true,
+
+                        )
                     FormInputField(label = "Umur*", placeholder = "Umur")
                     FormInputField(label = "Negara*", placeholder = "Negara")
                     FormInputField(label = "Provinsi*", placeholder = "Provinsi")
@@ -136,5 +165,5 @@ fun FormInputField(label: String, placeholder: String) {
 @Composable
 private fun PreviewRegisterScreen() {
     val mockNavController = rememberNavController()
-    RegisterScreen(navController = mockNavController)
+    RegisterScreen(navController = mockNavController, authViewModel = AuthViewModel())
 }

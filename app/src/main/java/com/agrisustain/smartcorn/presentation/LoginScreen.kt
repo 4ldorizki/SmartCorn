@@ -39,9 +39,10 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.agrisustain.smartcorn.R
 import com.agrisustain.smartcorn.navigation.Screen
+import com.agrisustain.smartcorn.viewmodel.AuthViewModel
 
 @Composable
-fun LoginScreen(navController: NavController) {
+fun LoginScreen(navController: NavController, authViewModel: AuthViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -92,15 +93,9 @@ fun LoginScreen(navController: NavController) {
                 label = { Text("Email") },
                 placeholder = { Text("Masukan email") },
                 modifier = Modifier
-                    .background(Color.White, shape = RoundedCornerShape(8.dp)),
+                    .background(Color.White),
                 singleLine = true,
-//                        colors = TextFieldDefaults.outlinedTextFieldColors(
-//                            containerColor = Color.White,
-//                            unfocusedBorderColor = Color.Transparent,
-//                            focusedBorderColor = Color.Transparent,
-//                            focusedTextColor = Color.Black,
-//                            unfocusedTextColor = Color.Black
-//                        )
+
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -116,13 +111,7 @@ fun LoginScreen(navController: NavController) {
                 modifier = Modifier
                     .background(Color.White, shape = RoundedCornerShape(8.dp)),
                 singleLine = true,
-//                        colors = TextFieldDefaults.outlinedTextFieldColors(
-//                            containerColor = Color.White,
-//                            unfocusedBorderColor = Color.Transparent,
-//                            focusedBorderColor = Color.Transparent,
-//                            focusedTextColor = Color.Black,
-//                            unfocusedTextColor = Color.Black
-//                        )
+
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -203,5 +192,5 @@ fun LoginScreen(navController: NavController) {
 @Composable
 fun PreviewLoginScreen() {
     val mockNavController = rememberNavController()
-    LoginScreen(navController = mockNavController)
+    LoginScreen(navController = mockNavController, authViewModel = AuthViewModel())
 }

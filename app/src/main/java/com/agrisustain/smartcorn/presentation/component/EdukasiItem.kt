@@ -87,7 +87,7 @@ fun PreviewEdukasiItem () {
             "Judul Edukasi 1",
             "Deskripsi edukasi 1",
             "",
-            R.drawable.budidaya_image
+            R.drawable.budidaya_image2
         ),
         onItemClicked = { }
     )
