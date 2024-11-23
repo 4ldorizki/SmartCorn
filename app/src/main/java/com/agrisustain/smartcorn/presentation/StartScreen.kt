@@ -58,7 +58,7 @@ fun StartScreen (navController: NavController) {
                     .padding(horizontal = 50.dp),
 //                    .align(Alignment.CenterHorizontally),
                 text = "Registrasi",
-                onClick = { navController.navigate("register_screen") }
+                onClick = { navController.navigate(Screen.Daftar.route) }
             )
         }
     }

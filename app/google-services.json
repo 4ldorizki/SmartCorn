@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "903765744772",
+    "project_id": "smartcorn-65f8c",
+    "storage_bucket": "smartcorn-65f8c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:903765744772:android:95a8a479eee4ea859ab6d1",
+        "android_client_info": {
+          "package_name": "com.agrisustain.smartcorn"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSJM2HHtE9-4ieA_9Z7tn-iPR-tFNyFVY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -43,14 +43,14 @@ fun SmartcornApp (
 
     NavHost(
         navController = navController,
-        startDestination = Screen.GetStarted.route,
+        startDestination = Screen.Home.route,
         modifier = modifier
     ) {
         composable(Screen.GetStarted.route) { GetStartedPage(navController) }
         composable(Screen.Start.route) { StartScreen(navController) }
         composable(Screen.Login.route) { LoginScreen(navController, authViewModel) }
         composable(Screen.Daftar.route) { RegisterScreen(navController, authViewModel) }
-        composable(Screen.Home.route) { HomeScreen(navController) }
+        composable(Screen.Home.route) { HomeScreen(navController, authViewModel) }
         composable(Screen.Edukasi.route) { EdukasiScreen(navController) }
         composable(Screen.Scan.route) { DeteksiPenyakitScreen(navController) }
         composable(Screen.Forum.route) { ForumScreen(navController) }

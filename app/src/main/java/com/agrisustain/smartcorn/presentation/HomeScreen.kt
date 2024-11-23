@@ -18,9 +18,12 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -29,15 +32,28 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.agrisustain.smartcorn.navigation.Screen
 import com.agrisustain.smartcorn.presentation.component.HomeItem
 import com.agrisustain.smartcorn.presentation.component.SideBarButton
+import com.agrisustain.smartcorn.viewmodel.AuthState
+import com.agrisustain.smartcorn.viewmodel.AuthViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    navController: NavController
+    navController: NavController,
+    authViewModel: AuthViewModel
 ) {
     // Kondisi jika belum login redirect ke login page
+    val authState = authViewModel.authState.observeAsState()
+
+    LaunchedEffect(authState.value) {
+        when(authState.value) {
+            is AuthState.Unauthenticated -> navController.navigate(Screen.Login.route)
+            else -> Unit
+        }
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -91,6 +107,12 @@ fun HomeScreen(
 
             // Grid fitur
             HomeItem(navController = rememberNavController())
+
+            TextButton(onClick = {
+                authViewModel.logout()
+            }) {
+                Text("Sign Out")
+            }
         }
     }
 }
@@ -99,5 +121,5 @@ fun HomeScreen(
 @Preview(showBackground = true)
 @Composable
 fun PreviewHomeScreen () {
-    HomeScreen(navController = rememberNavController())
+    HomeScreen(navController = rememberNavController(), authViewModel = AuthViewModel())
 }

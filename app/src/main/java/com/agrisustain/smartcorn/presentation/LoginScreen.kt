@@ -1,5 +1,6 @@
 package com.agrisustain.smartcorn.presentation
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -20,6 +21,8 @@ import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -28,6 +31,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -39,10 +43,27 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.agrisustain.smartcorn.R
 import com.agrisustain.smartcorn.navigation.Screen
+import com.agrisustain.smartcorn.viewmodel.AuthState
 import com.agrisustain.smartcorn.viewmodel.AuthViewModel
 
 @Composable
 fun LoginScreen(navController: NavController, authViewModel: AuthViewModel) {
+
+    var email = remember { mutableStateOf("") }
+    var password = remember { mutableStateOf("") }
+
+    val authState = authViewModel.authState.observeAsState()
+    val context = LocalContext.current
+
+    LaunchedEffect(authState.value) {
+        when(authState.value) {
+            is AuthState.Authenticated -> navController.navigate(Screen.Home.route)
+            is AuthState.Error -> Toast.makeText(context,
+                (authState.value as AuthState.Error).message, Toast.LENGTH_SHORT).show()
+            else -> Unit
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -86,10 +107,9 @@ fun LoginScreen(navController: NavController, authViewModel: AuthViewModel) {
             Spacer(modifier = Modifier.height(24.dp))
 
             // Input Email dengan latar belakang putih
-            val emailState = remember { mutableStateOf(TextFieldValue("")) }
             OutlinedTextField(
-                value = emailState.value,
-                onValueChange = { emailState.value = it },
+                value = email.value,
+                onValueChange = { email.value = it },
                 label = { Text("Email") },
                 placeholder = { Text("Masukan email") },
                 modifier = Modifier
@@ -101,10 +121,9 @@ fun LoginScreen(navController: NavController, authViewModel: AuthViewModel) {
             Spacer(modifier = Modifier.height(8.dp))
 
             // Input Kata Sandi dengan latar belakang putih
-            val passwordState = remember { mutableStateOf(TextFieldValue("")) }
             OutlinedTextField(
-                value = passwordState.value,
-                onValueChange = { passwordState.value = it },
+                value = password.value,
+                onValueChange = { password.value = it },
                 label = { Text("Kata Sandi") },
                 placeholder = { Text("Masukan kata sandi") },
                 visualTransformation = PasswordVisualTransformation(),
@@ -150,7 +169,9 @@ fun LoginScreen(navController: NavController, authViewModel: AuthViewModel) {
 
             // Tombol Masuk
             Button(
-                onClick = { navController.navigate(Screen.Home.route) },
+                onClick = {
+                    authViewModel.login(email.value, password.value)
+                },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFC107)),
                 modifier = Modifier
                     .fillMaxWidth()

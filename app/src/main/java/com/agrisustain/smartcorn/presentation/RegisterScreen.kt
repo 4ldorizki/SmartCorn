@@ -2,6 +2,7 @@ package com.agrisustain.smartcorn.presentation
 
 import com.agrisustain.smartcorn.presentation.component.BackButton
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -9,11 +10,14 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
@@ -21,9 +25,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.agrisustain.smartcorn.navigation.Screen
+import com.agrisustain.smartcorn.viewmodel.AuthState
 import com.agrisustain.smartcorn.viewmodel.AuthViewModel
 
 
@@ -32,8 +40,23 @@ import com.agrisustain.smartcorn.viewmodel.AuthViewModel
 @Composable
 fun RegisterScreen(
     navController: NavController,
-    authViewModel: AuthViewModel,
+    authViewModel: AuthViewModel = viewModel(),
 ) {
+    var email = remember { mutableStateOf("") }
+    var password = remember { mutableStateOf("") }
+
+    val authState = authViewModel.authState.observeAsState()
+    val context = LocalContext.current
+
+    LaunchedEffect(authState.value) {
+        when(authState.value) {
+            is AuthState.Authenticated -> navController.navigate(Screen.Home.route)
+            is AuthState.Error -> Toast.makeText(context,
+                (authState.value as AuthState.Error).message,Toast.LENGTH_SHORT).show()
+            else -> Unit
+        }
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -76,13 +99,12 @@ fun RegisterScreen(
                         .padding(16.dp)
                 ) {
                     // Input fields
-                    FormInputField(label = "Nama Pengguna*", placeholder = "Nama Pengguna")
+//                    FormInputField(label = "Nama Pengguna*", placeholder = "Nama Pengguna")
 
                     // Input Email dengan latar belakang putih
-                    val emailState = remember { mutableStateOf(TextFieldValue("")) }
                     OutlinedTextField(
-                        value = emailState.value,
-                        onValueChange = { emailState.value = it },
+                        value = email.value,
+                        onValueChange = { email.value = it },
                         label = { Text("Email*") },
                         placeholder = { Text("Masukan email") },
                         modifier = Modifier
@@ -92,10 +114,10 @@ fun RegisterScreen(
                         )
 
                     // Input Kata Sandi dengan latar belakang putih
-                    val passwordState = remember { mutableStateOf(TextFieldValue("")) }
+
                     OutlinedTextField(
-                        value = passwordState.value,
-                        onValueChange = { passwordState.value = it },
+                        value = password.value,
+                        onValueChange = { password.value = it },
                         label = { Text("Kata Sandi") },
                         placeholder = { Text("Masukan kata sandi") },
                         visualTransformation = PasswordVisualTransformation(),
@@ -105,10 +127,10 @@ fun RegisterScreen(
                         singleLine = true,
 
                         )
-                    FormInputField(label = "Umur*", placeholder = "Umur")
-                    FormInputField(label = "Negara*", placeholder = "Negara")
-                    FormInputField(label = "Provinsi*", placeholder = "Provinsi")
-                    FormInputField(label = "Kota*", placeholder = "Kota")
+//                    FormInputField(label = "Umur*", placeholder = "Umur")
+//                    FormInputField(label = "Negara*", placeholder = "Negara")
+//                    FormInputField(label = "Provinsi*", placeholder = "Provinsi")
+//                    FormInputField(label = "Kota*", placeholder = "Kota")
 
                     // Terms and conditions
                     Text(
@@ -133,11 +155,13 @@ fun RegisterScreen(
                         }
                         Spacer(modifier = Modifier.width(8.dp))
                         Button(
-                            onClick = { navController.navigate("verifikasi_screen") },
+                            onClick = {
+                                authViewModel.daftar(email.value, password.value)
+                            },
                             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF47AF64)),
                             modifier = Modifier.weight(1f)
                         ) {
-                            Text("Selanjutnya")
+                            Text("Daftar")
                         }
                     }
                 }
@@ -147,19 +171,19 @@ fun RegisterScreen(
 }
 
 
-@Composable
-fun FormInputField(label: String, placeholder: String) {
-    val textState = remember { mutableStateOf(TextFieldValue("")) }
-    OutlinedTextField(
-        value = textState.value,
-        onValueChange = { textState.value = it },
-        label = { Text(label) },
-        placeholder = { Text(placeholder) },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp)
-    )
-}
+//@Composable
+//fun FormInputField(label: String, placeholder: String) {
+//    val textState = remember { mutableStateOf(TextFieldValue("")) }
+//    OutlinedTextField(
+//        value = textState.value,
+//        onValueChange = { textState.value = it },
+//        label = { Text(label) },
+//        placeholder = { Text(placeholder) },
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .padding(vertical = 4.dp)
+//    )
+//}
 
 @Preview(showBackground = true)
 @Composable
