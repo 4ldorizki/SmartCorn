@@ -44,6 +44,7 @@ fun RegisterScreen(
 ) {
     var email = remember { mutableStateOf("") }
     var password = remember { mutableStateOf("") }
+    var namaLengkap = remember { mutableStateOf("") }
 
     val authState = authViewModel.authState.observeAsState()
     val context = LocalContext.current
@@ -98,8 +99,17 @@ fun RegisterScreen(
                         .background(Color.White, shape = RoundedCornerShape(topEnd = 16.dp, topStart = 16.dp))
                         .padding(16.dp)
                 ) {
-                    // Input fields
-//                    FormInputField(label = "Nama Pengguna*", placeholder = "Nama Pengguna")
+                    // Input Nama lengkap dengan latar belakang putih
+                    OutlinedTextField(
+                        value = namaLengkap.value,
+                        onValueChange = { namaLengkap.value = it },
+                        label = { Text("Nama Lengkap*") },
+                        placeholder = { Text("Masukan nama lengkap anda") },
+                        modifier = Modifier
+                            .background(Color.White)
+                            .fillMaxWidth(),
+                        singleLine = true,
+                    )
 
                     // Input Email dengan latar belakang putih
                     OutlinedTextField(
@@ -156,7 +166,7 @@ fun RegisterScreen(
                         Spacer(modifier = Modifier.width(8.dp))
                         Button(
                             onClick = {
-                                authViewModel.daftar(email.value, password.value)
+                                authViewModel.daftar(email.value, password.value, namaLengkap.value)
                             },
                             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF47AF64)),
                             modifier = Modifier.weight(1f)

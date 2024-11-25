@@ -49,7 +49,7 @@ fun HomeScreen(
 
     LaunchedEffect(authState.value) {
         when(authState.value) {
-            is AuthState.Unauthenticated -> navController.navigate(Screen.Login.route)
+            is AuthState.Unauthenticated -> navController.navigate(Screen.GetStarted.route)
             else -> Unit
         }
     }

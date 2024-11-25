@@ -43,7 +43,7 @@ import com.agrisustain.smartcorn.presentation.component.SmartButton
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DeteksiPenyakitScreen (
-    navController: NavController
+    navController: NavController,
 ) {
     Scaffold(
         topBar = {

@@ -46,7 +46,7 @@ import com.agrisustain.smartcorn.presentation.component.SmartButton
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ForumScreen(
-    navController: NavController
+    navController: NavController,
 ) {
     Scaffold(
         topBar = {

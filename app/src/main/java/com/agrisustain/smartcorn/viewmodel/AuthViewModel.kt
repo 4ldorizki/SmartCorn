@@ -42,9 +42,9 @@ class AuthViewModel : ViewModel() {
             }
     }
 
-    fun daftar(email: String, password: String) {
+    fun daftar(email: String, password: String, namaLengkap: String) {
 
-        if (email.isEmpty() || password.isEmpty()) {
+        if (email.isEmpty() || password.isEmpty() || namaLengkap.isEmpty()) {
             _authState.value = AuthState.Error("Email atau Password tidak boleh kosong!")
             return
         }

@@ -43,7 +43,7 @@ fun SmartcornApp (
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Home.route,
+        startDestination = Screen.GetStarted.route,
         modifier = modifier
     ) {
         composable(Screen.GetStarted.route) { GetStartedPage(navController) }
