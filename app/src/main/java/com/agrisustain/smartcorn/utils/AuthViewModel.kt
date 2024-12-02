@@ -1,4 +1,4 @@
-package com.agrisustain.smartcorn.viewmodel
+package com.agrisustain.smartcorn.utils
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

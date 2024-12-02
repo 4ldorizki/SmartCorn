@@ -1,9 +1,6 @@
 package com.agrisustain.smartcorn.presentation
 
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -30,8 +27,7 @@ import androidx.navigation.navArgument
 import com.agrisustain.smartcorn.R
 import com.agrisustain.smartcorn.navigation.NavigationItem
 import com.agrisustain.smartcorn.navigation.Screen
-import com.agrisustain.smartcorn.presentation.component.HomeItem
-import com.agrisustain.smartcorn.viewmodel.AuthViewModel
+import com.agrisustain.smartcorn.utils.AuthViewModel
 
 @Composable
 fun SmartcornApp (

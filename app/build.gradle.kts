@@ -65,4 +65,6 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
     implementation ("androidx.lifecycle:lifecycle-runtime-compose:2.6.1")
     implementation("androidx.core:core-splashscreen:1.0.1")
+
+//    implementation ("com.google.firebase:firebase-firestore-ktx:24.4.0")
 }

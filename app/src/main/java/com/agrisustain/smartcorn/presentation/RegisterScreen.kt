@@ -4,9 +4,7 @@ import com.agrisustain.smartcorn.presentation.component.BackButton
 import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -20,19 +18,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.agrisustain.smartcorn.navigation.Screen
-import com.agrisustain.smartcorn.viewmodel.AuthState
-import com.agrisustain.smartcorn.viewmodel.AuthViewModel
+import com.agrisustain.smartcorn.utils.AuthState
+import com.agrisustain.smartcorn.utils.AuthViewModel
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")

@@ -35,7 +35,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -43,8 +42,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.agrisustain.smartcorn.R
 import com.agrisustain.smartcorn.navigation.Screen
-import com.agrisustain.smartcorn.viewmodel.AuthState
-import com.agrisustain.smartcorn.viewmodel.AuthViewModel
+import com.agrisustain.smartcorn.utils.AuthState
+import com.agrisustain.smartcorn.utils.AuthViewModel
 
 @Composable
 fun LoginScreen(navController: NavController, authViewModel: AuthViewModel) {

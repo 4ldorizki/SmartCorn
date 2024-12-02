@@ -57,7 +57,7 @@ fun DetailEdukasiScreen (
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Medium,
                         color = Color.White,
-                        modifier = Modifier.offset(x = 16.dp)
+                        modifier = Modifier.offset(x = 8.dp)
                     )
                 },
                 navigationIcon = {

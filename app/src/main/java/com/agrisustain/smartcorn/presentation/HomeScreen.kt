@@ -34,9 +34,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.agrisustain.smartcorn.navigation.Screen
 import com.agrisustain.smartcorn.presentation.component.HomeItem
-import com.agrisustain.smartcorn.presentation.component.SideBarButton
-import com.agrisustain.smartcorn.viewmodel.AuthState
-import com.agrisustain.smartcorn.viewmodel.AuthViewModel
+import com.agrisustain.smartcorn.utils.AuthState
+import com.agrisustain.smartcorn.utils.AuthViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
