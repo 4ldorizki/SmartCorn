@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,11 +26,22 @@ import androidx.navigation.compose.rememberNavController
 import com.agrisustain.smartcorn.R
 import com.agrisustain.smartcorn.navigation.Screen
 import com.agrisustain.smartcorn.presentation.component.SmartButton
+import com.agrisustain.smartcorn.utils.AuthState
+import com.agrisustain.smartcorn.utils.AuthViewModel
 
 @Composable
-fun GetStartedPage(navController: NavController) {
+fun GetStartedPage(navController: NavController, authViewModel: AuthViewModel) {
     // Kondisi jika sudah login
-    //navController.navigate(Screen.Home.route)
+    val authState = authViewModel.authState.observeAsState()
+
+    LaunchedEffect(authState.value) {
+        when(authState.value) {
+//            is AuthState.Unauthenticated -> navController.navigate(Screen.GetStarted.route)
+            is AuthState.Authenticated -> navController.navigate(Screen.Home.route)
+            else -> Unit
+        }
+    }
+
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -88,5 +101,5 @@ fun GetStartedPage(navController: NavController) {
 @Composable
 fun PreviewGetStartedPage() {
     val mockNavController = rememberNavController()
-    GetStartedPage(navController = mockNavController)
+    GetStartedPage(navController = mockNavController, authViewModel = AuthViewModel())
 }

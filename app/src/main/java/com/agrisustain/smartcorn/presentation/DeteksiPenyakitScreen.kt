@@ -16,6 +16,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -24,11 +25,15 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -39,140 +44,153 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.agrisustain.smartcorn.R
 import com.agrisustain.smartcorn.presentation.component.SmartButton
+import com.agrisustain.smartcorn.utils.BaseActivity
+import com.google.android.gms.auth.api.phone.SmsCodeAutofillClient.PermissionState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DeteksiPenyakitScreen (
     navController: NavController,
 ) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        "SmartCorn",
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Medium,
-                        color = Color.White
-                    )
-                },
-                actions = {
-                    IconButton(onClick = { /* Profile action */ }) {
-                        Box(
-                            modifier = Modifier
-                                .size(50.dp)
-                                .background(Color.Gray, shape = CircleShape)
-                        ) {
-                            // Placeholder for profile icon
-                        }
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFF47AF64))
-            )
-        },
-        bottomBar = {
-            BottomBar(navController)
-        },
-        modifier = Modifier
-    ) { contentPadding ->
-        Column (
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(contentPadding),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.upload_img),
-                contentDescription = "Upload Image",
-                modifier = Modifier.size(200.dp)
-            )
-            Text(
-                text = "Unggah foto tanaman Anda untuk mengidentifikasi penyakit dan segera menerima solusi yang disesuaikan.",
-                textAlign = TextAlign.Left,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Medium,
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-            )
+    val context = LocalContext.current
+    val activity = context as BaseActivity
+    val isCameraPermissionGranted by activity.isCameraPermissionGranted.collectAsState()
 
+    // Jika izin kamera diberikan, tampilkan CameraPreview tanpa TopAppBar dan BottomBar
+    if (isCameraPermissionGranted) {
+        CameraPreview()
+    } else {
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = {
+                        Text(
+                            "SmartCorn",
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.Medium,
+                            color = Color.White
+                        )
+                    },
+                    actions = {
+                        IconButton(onClick = { /* Profile action */ }) {
+                            Box(
+                                modifier = Modifier
+                                    .size(50.dp)
+                                    .background(Color.Gray, shape = CircleShape)
+                            ) {
+                                // Placeholder for profile icon
+                            }
+                        }
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFF47AF64))
+                )
+            },
+            bottomBar = {
+                BottomBar(navController)
+            },
+            modifier = Modifier
+        ) { contentPadding ->
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-                    .shadow(
-                        elevation = 8.dp, // Ukuran bayangan
-                        shape = RoundedCornerShape(16.dp), // Bentuk bayangan
-                        clip = false // Jika true, bayangan akan mengikuti bentuk klip
-                    )
-                    .clip(RoundedCornerShape(16.dp))
-                    .background(color = Color(0xFFE4FFEC))
-                    .padding(16.dp),
+                    .fillMaxSize()
+                    .padding(contentPadding),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.scan_icon),
-                        contentDescription = "Scan",
-                        modifier = Modifier.size(64.dp)
-                    )
-                    Icon(
-                        imageVector = Icons.Default.ArrowForward,
-                        contentDescription = null,
-                        tint = Color.Black
-                    )
-
-                    Image(
-                        painter = painterResource(id = R.drawable.hasil_icon),
-                        contentDescription = "Hasil",
-                        modifier = Modifier.size(64.dp)
-                    )
-                    Icon(
-                        imageVector = Icons.Default.ArrowForward,
-                        contentDescription = null,
-                        tint = Color.Black
-                    )
-
-                    Image(
-                        painter = painterResource(id = R.drawable.solusi_icon),
-                        contentDescription = "Solusi",
-                        modifier = Modifier.size(64.dp)
-                    )
-                }
-                Spacer(modifier = Modifier.height(16.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 6.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(text = "Scan", fontSize = 18.sp, fontWeight = FontWeight.Medium)
-                    Text(text = "Hasil", fontSize = 18.sp, fontWeight = FontWeight.Medium)
-                    Text(text = "Solusi", fontSize = 18.sp, fontWeight = FontWeight.Medium)
-                }
-                Spacer(modifier = Modifier.height(16.dp))
-
-                SmartButton(
-                    text = "Unggah Gambar",
-                    onClick = { }
+                Image(
+                    painter = painterResource(id = R.drawable.upload_img),
+                    contentDescription = "Upload Image",
+                    modifier = Modifier.size(200.dp)
                 )
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-            Column (
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
-                horizontalAlignment = Alignment.Start
-            ) {
                 Text(
-                    text = "Riwayat Deteksi Penyakit", fontSize = 16.sp, fontWeight = FontWeight.SemiBold
+                    text = "Unggah foto tanaman Anda untuk mengidentifikasi penyakit dan segera menerima solusi yang disesuaikan.",
+                    textAlign = TextAlign.Left,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
                 )
-                Column (
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.fillMaxSize()
-                ){
-                    Text("Riwayat Kosong")
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                        .shadow(
+                            elevation = 8.dp, // Ukuran bayangan
+                            shape = RoundedCornerShape(16.dp), // Bentuk bayangan
+                            clip = false // Jika true, bayangan akan mengikuti bentuk klip
+                        )
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(color = Color(0xFFE4FFEC))
+                        .padding(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.scan_icon),
+                            contentDescription = "Scan",
+                            modifier = Modifier.size(64.dp)
+                        )
+                        Icon(
+                            imageVector = Icons.Default.ArrowForward,
+                            contentDescription = null,
+                            tint = Color.Black
+                        )
+
+                        Image(
+                            painter = painterResource(id = R.drawable.hasil_icon),
+                            contentDescription = "Hasil",
+                            modifier = Modifier.size(64.dp)
+                        )
+                        Icon(
+                            imageVector = Icons.Default.ArrowForward,
+                            contentDescription = null,
+                            tint = Color.Black
+                        )
+
+                        Image(
+                            painter = painterResource(id = R.drawable.solusi_icon),
+                            contentDescription = "Solusi",
+                            modifier = Modifier.size(64.dp)
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(horizontal = 6.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(text = "Scan", fontSize = 18.sp, fontWeight = FontWeight.Medium)
+                        Text(text = "Hasil", fontSize = 18.sp, fontWeight = FontWeight.Medium)
+                        Text(text = "Solusi", fontSize = 18.sp, fontWeight = FontWeight.Medium)
+                    }
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    SmartButton(
+                        text = "Unggah Gambar",
+                        onClick = { activity.handleCameraPermission() }
+                    )
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                Column(
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+                    horizontalAlignment = Alignment.Start
+                ) {
+                    Text(
+                        text = "Riwayat Deteksi Penyakit",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                    Column(
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        Text("Riwayat Kosong")
+                    }
                 }
             }
         }

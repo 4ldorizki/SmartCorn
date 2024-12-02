@@ -66,5 +66,8 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-runtime-compose:2.6.1")
     implementation("androidx.core:core-splashscreen:1.0.1")
 
+    implementation("androidx.camera:camera-camera2:1.4.0")
+    implementation("androidx.camera:camera-view:1.4.0")
+
 //    implementation ("com.google.firebase:firebase-firestore-ktx:24.4.0")
 }

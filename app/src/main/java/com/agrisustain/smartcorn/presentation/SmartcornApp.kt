@@ -42,7 +42,7 @@ fun SmartcornApp (
         startDestination = Screen.GetStarted.route,
         modifier = modifier
     ) {
-        composable(Screen.GetStarted.route) { GetStartedPage(navController) }
+        composable(Screen.GetStarted.route) { GetStartedPage(navController, authViewModel) }
         composable(Screen.Start.route) { StartScreen(navController) }
         composable(Screen.Login.route) { LoginScreen(navController, authViewModel) }
         composable(Screen.Daftar.route) { RegisterScreen(navController, authViewModel) }
