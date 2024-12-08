@@ -39,7 +39,10 @@ fun RegisterScreen(
 ) {
     var email = remember { mutableStateOf("") }
     var password = remember { mutableStateOf("") }
-    var namaLengkap = remember { mutableStateOf("") }
+    var namaDepan = remember { mutableStateOf("") }
+    var namaBelakang = remember { mutableStateOf("") }
+    var provinsi = remember { mutableStateOf("") }
+    var kota = remember { mutableStateOf("") }
 
     val authState = authViewModel.authState.observeAsState()
     val context = LocalContext.current
@@ -96,10 +99,46 @@ fun RegisterScreen(
                 ) {
                     // Input Nama lengkap dengan latar belakang putih
                     OutlinedTextField(
-                        value = namaLengkap.value,
-                        onValueChange = { namaLengkap.value = it },
-                        label = { Text("Nama Lengkap*") },
-                        placeholder = { Text("Masukan nama lengkap anda") },
+                        value = namaDepan.value,
+                        onValueChange = { namaDepan.value = it },
+                        label = { Text("Nama Depan*") },
+                        placeholder = { Text("Masukan nama depan anda") },
+                        modifier = Modifier
+                            .background(Color.White)
+                            .fillMaxWidth(),
+                        singleLine = true,
+                    )
+
+                    // Input Nama belakang dengan latar belakang putih
+                    OutlinedTextField(
+                        value = namaBelakang.value,
+                        onValueChange = { namaBelakang.value = it },
+                        label = { Text("Nama Belakang*") },
+                        placeholder = { Text("Masukan nama belakang anda") },
+                        modifier = Modifier
+                            .background(Color.White)
+                            .fillMaxWidth(),
+                        singleLine = true,
+                    )
+
+                    // Input provinsi
+                    OutlinedTextField(
+                        value = provinsi.value,
+                        onValueChange = { provinsi.value = it },
+                        label = { Text("Provinsi*") },
+                        placeholder = { Text("Masukan provinsi anda") },
+                        modifier = Modifier
+                            .background(Color.White)
+                            .fillMaxWidth(),
+                        singleLine = true,
+                    )
+
+                    // Input kota
+                    OutlinedTextField(
+                        value = kota.value,
+                        onValueChange = { kota.value = it },
+                        label = { Text("Kota*") },
+                        placeholder = { Text("Masukan provinsi anda") },
                         modifier = Modifier
                             .background(Color.White)
                             .fillMaxWidth(),
@@ -119,7 +158,6 @@ fun RegisterScreen(
                         )
 
                     // Input Kata Sandi dengan latar belakang putih
-
                     OutlinedTextField(
                         value = password.value,
                         onValueChange = { password.value = it },
@@ -161,7 +199,7 @@ fun RegisterScreen(
                         Spacer(modifier = Modifier.width(8.dp))
                         Button(
                             onClick = {
-                                authViewModel.daftar(email.value, password.value, namaLengkap.value)
+                                authViewModel.daftar(email.value, password.value, namaDepan.value)
                             },
                             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF47AF64)),
                             modifier = Modifier.weight(1f)

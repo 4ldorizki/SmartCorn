@@ -69,5 +69,8 @@ dependencies {
     implementation("androidx.camera:camera-camera2:1.4.0")
     implementation("androidx.camera:camera-view:1.4.0")
 
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
 //    implementation ("com.google.firebase:firebase-firestore-ktx:24.4.0")
 }
