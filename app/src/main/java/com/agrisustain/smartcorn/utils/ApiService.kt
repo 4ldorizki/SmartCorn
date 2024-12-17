@@ -1,18 +1,17 @@
 package com.agrisustain.smartcorn.utils
 
+import com.agrisustain.smartcorn.data.api.ApiResponse
+import com.agrisustain.smartcorn.data.api.LoginRequest
+import com.agrisustain.smartcorn.data.api.RegisterRequest
 import retrofit2.Call
-import com.agrisustain.smartcorn.model.LoginRequest
-import com.agrisustain.smartcorn.model.LoginResponse
-import com.agrisustain.smartcorn.model.RegisterRequest
-import com.agrisustain.smartcorn.model.RegisterResponse
 import retrofit2.http.Body
 import retrofit2.http.POST
 
 
 interface ApiService {
-    @POST("/register")
-    fun registerUser(@Body request: RegisterRequest?): Call<RegisterResponse?>?
+    @POST("register")
+    suspend fun register(@Body registerRequest: RegisterRequest): ApiResponse<Any>
 
-    @POST("/login")
-    fun loginUser(@Body request: LoginRequest?): Call<LoginResponse?>?
+    @POST("login")
+    suspend fun login(@Body loginRequest: LoginRequest): ApiResponse<Any>
 }

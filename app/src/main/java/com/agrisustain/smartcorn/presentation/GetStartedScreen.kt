@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.agrisustain.smartcorn.R
@@ -30,15 +33,16 @@ import com.agrisustain.smartcorn.utils.AuthState
 import com.agrisustain.smartcorn.utils.AuthViewModel
 
 @Composable
-fun GetStartedPage(navController: NavController, authViewModel: AuthViewModel) {
-    // Kondisi jika sudah login
-    val authState = authViewModel.authState.observeAsState()
+fun GetStartedPage(navController: NavController, authViewModel: AuthViewModel = viewModel()) {
+    // Observasi status login
+    val authState by authViewModel.authState.collectAsState()
 
-    LaunchedEffect(authState.value) {
-        when(authState.value) {
-//            is AuthState.Unauthenticated -> navController.navigate(Screen.GetStarted.route)
-            is AuthState.Authenticated -> navController.navigate(Screen.Home.route)
-            else -> Unit
+    // Redirect ke HomeScreen jika sudah login
+    if (authState) {
+        LaunchedEffect(Unit) {
+            navController.navigate(Screen.Home.route) {
+                popUpTo(Screen.GetStarted.route) { inclusive = true } // Hapus stack layar sebelumnya
+            }
         }
     }
 
@@ -101,5 +105,6 @@ fun GetStartedPage(navController: NavController, authViewModel: AuthViewModel) {
 @Composable
 fun PreviewGetStartedPage() {
     val mockNavController = rememberNavController()
-    GetStartedPage(navController = mockNavController, authViewModel = AuthViewModel())
+    GetStartedPage(navController = mockNavController, authViewModel = viewModel())
+
 }

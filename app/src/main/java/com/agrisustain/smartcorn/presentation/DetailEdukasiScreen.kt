@@ -2,6 +2,7 @@ package com.agrisustain.smartcorn.presentation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,7 +12,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -137,7 +140,8 @@ fun DetailEdukasiContent (
                     )
                     .clip(RoundedCornerShape(16.dp))
                     .background(color = Color(0xFFE4FFEC))
-                    .padding(16.dp),
+                    .padding(16.dp)
+                    .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.Start
             ) {
                 Text(
@@ -166,7 +170,7 @@ fun PreviewDetailEdukasiScreen () {
     val navController = rememberNavController()
 
     // Buat data dummy untuk edukasiId
-    val dummyEdukasiId = 1 // Ganti dengan ID yang sesuai dengan data dummy Anda
+    val dummyEdukasiId = 2 // Ganti dengan ID yang sesuai dengan data dummy Anda
 
     // Panggil fungsi DetailEdukasiScreen dengan data dummy
     DetailEdukasiScreen(

@@ -90,12 +90,12 @@ fun ProfileScreen(navController: NavController) {
                             .clickable { /* Open change profile image dialog */ },
                         contentAlignment = Alignment.Center
                     ) {
-                        Image(
-                            painter = painterResource(R.drawable.profile), // Replace with actual resource
-                            contentDescription = "Profile Picture",
-                            modifier = Modifier.fillMaxSize(),
-                            contentScale = ContentScale.Crop
-                        )
+//                        Image(
+//                            painter = painterResource(R.drawable.profile), // Replace with actual resource
+//                            contentDescription = "Profile Picture",
+//                            modifier = Modifier.fillMaxSize(),
+//                            contentScale = ContentScale.Crop
+//                        )
                     }
 
                     Spacer(modifier = Modifier.height(8.dp))
@@ -116,7 +116,7 @@ fun ProfileScreen(navController: NavController) {
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp)
                 ) {
-                    ProfileDetailItem(label = "Nomor Telepon", value = "+62")
+                    ProfileDetailItem(label = "Nama Pengguna", value = "")
                     ProfileDetailItem(label = "Email", value = "")
                     ProfileDetailItem(label = "Alamat", value = "")
                 }
@@ -146,7 +146,7 @@ fun ProfileScreen(navController: NavController) {
 
                 Button(
                     onClick = { /* Handle logout action */ },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF6C6C)),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 50.dp)
@@ -162,17 +162,6 @@ fun ProfileScreen(navController: NavController) {
                 }
 
                 Spacer(modifier = Modifier.weight(1f))
-
-                // Footer Version
-                Text(
-                    text = "Versi 2.0.2.4",
-                    fontSize = 12.sp,
-                    color = Color.Gray,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 16.dp),
-                    textAlign = TextAlign.Center
-                )
             }
         }
     )

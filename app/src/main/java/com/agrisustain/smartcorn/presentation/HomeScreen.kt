@@ -19,12 +19,16 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,6 +37,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.agrisustain.smartcorn.R
@@ -41,21 +46,40 @@ import com.agrisustain.smartcorn.presentation.component.HomeItem
 import com.agrisustain.smartcorn.utils.AuthState
 import com.agrisustain.smartcorn.utils.AuthViewModel
 
+@Composable
+fun ShowSnackbar(
+    snackbarHostState: SnackbarHostState,
+    message: String
+) {
+    LaunchedEffect(message) {
+        snackbarHostState.showSnackbar(message)
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     navController: NavController,
-    authViewModel: AuthViewModel
+    authViewModel: AuthViewModel = viewModel()
 ) {
     // Kondisi jika belum login redirect ke login page
-    val authState = authViewModel.authState.observeAsState()
+    // Memeriksa status login
+    val authState by authViewModel.authState.collectAsState()
 
-    LaunchedEffect(authState.value) {
-        when(authState.value) {
-            is AuthState.Unauthenticated -> navController.navigate(Screen.GetStarted.route)
-            else -> Unit
+    // Jika belum login, redirect ke halaman login
+    if (!authState) {
+        LaunchedEffect(Unit) {
+            navController.navigate(Screen.Login.route) {
+                popUpTo(Screen.Login.route) { inclusive = true } // Hapus semua stack sebelum halaman login
+            }
         }
+        return
     }
+
+    val snackbarHostState = remember{ SnackbarHostState() }
+
+    // Menggunakan Snackbar untuk pemberitahuan
+    ShowSnackbar(snackbarHostState, "Successfully signed out")
 
     Scaffold(
         topBar = {
@@ -119,7 +143,10 @@ fun HomeScreen(
                     fontWeight = FontWeight.Medium,
                     fontSize = 24.sp
                 )
-                IconButton(onClick = { authViewModel.logout() }) {
+                IconButton(onClick = {
+                    authViewModel.signOut()
+                    navController.navigate(Screen.GetStarted.route)
+                }) {
                     Icon(
                         painter = painterResource(id = R.drawable.baseline_logout_24),
                         contentDescription = "Logout",
@@ -139,5 +166,5 @@ fun HomeScreen(
 @Preview(showBackground = true)
 @Composable
 fun PreviewHomeScreen () {
-    HomeScreen(navController = rememberNavController(), authViewModel = AuthViewModel())
+    HomeScreen(navController = rememberNavController(), authViewModel = viewModel())
 }
